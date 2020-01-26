@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 RUN apk upgrade --update
 RUN apk add nano
@@ -23,8 +23,9 @@ RUN apk add krb5-dev
 RUN apk add libzip-dev
 RUN apk add libxml2-dev
 RUN apk add composer
+RUN apk add oniguruma-dev
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
 
 ARG TZ=UTC
