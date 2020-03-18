@@ -28,6 +28,10 @@ RUN apk add oniguruma-dev
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
 
+RUN apk add --update --no-cache autoconf g++ make
+RUN pecl install redis
+RUN docker-php-ext-enable redis
+
 ARG TZ=UTC
 ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
